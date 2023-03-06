@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace = "~{fragments :: head}">
+  <title>Edit user</title>
+</head>
+<body>
+<div th:replace = "~{fragments :: navigation-top}">
+</div>
+
+<div class="container">
+  <h2>Edit User</h2>
+  <br>
+  <h5>Please choose which user you would like to edit:</h5>
+  <div th:if="${userEditResult != null}" class="alert alert-primary" role="alert">
+    <p th:text=${userEditResult}></p>
+  </div>
+  <form class7="row g-3" method="post" action="/admin/edit-user">
+    <div class="form-row">
+      <div class="col-6 col-sm-3">
+        <select class="form-select form-select-lg" name="user-id" id="user-id">
+          <option th:each="user : ${allUsers}" th:value="${user.id}" th:text="${user.name}"></option>
+        </select>
+      </div>
+      <div class="col-6 col-sm-3">
+        <input type="submit" class="form-control" value="Edit">
+      </div>
+    </div>
+  </form>
+</div>
+<div class="container" th:if="${chosenUser != null}">
+  <div class="row mt-5">
+    <div class="col-6 mx-auto">
+      <form method="get" role="form" th:action="@{/admin/save-edited-user}" th:object="${chosenUser}">
+        <div class="mb-3">
+          <label class="form-label" for="name">Name</label>
+          <input class="form-control" th:field="${chosenUser.id}" id="id" name="id" type="hidden">
+          <input class="form-control" th:field="${chosenUser.name}" id="name" name="name" type="text">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="email">Email</label>
+          <input class="form-control" th:field="${chosenUser.email}" id="email" name="email" type="email">
+        </div>
+        <div class="mb-3">
+          <label class="col-sm-2 col-form-label" for="password">Password</label>
+          <input class="form-control" th:field="${chosenUser.password}" id="password" name="password" type="password">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="roles">Set as admin</label>
+          <select name="admin_role" id="roles">
+            <option value="false">No</option>
+            <option value="true">Yes</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <button class="btn btn-primary mb-3" type="submit">Save</button>
+        </div>
+      </form>
+    </div>
+</div>
+</div>
+</body>
+</html>

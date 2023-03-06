@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace = "~{fragments :: head}">
+  <title>Add purchase</title>
+</head>
+<body>
+<div th:replace = "~{fragments :: navigation-top}">
+</div>
+<div class="col-6 mx-auto">
+  <h2>Add a new purchase to database</h2>
+  <div th:if="${purchaseSaveResult != null}">
+    <p th:text="${purchaseSaveResult}"></p>
+  </div>
+  <form method="post" action="/my-purchases/add-purchase" th:object="${purchase}">
+    <label class="form-label" for="bmig">BMIG</label>
+    <input class="form-control" th:field="${purchase.bmig}" id="bmig" name="bmig" type="number" required>
+    <label class="form-label" for="title">Title</label>
+    <input class="form-control" th:field="${purchase.title}" id="title" name="title" type="text" required>
+    <label class="form-label" for="estimated_value">Estimated value</label>
+    <input class="form-control" th:field="${purchase.estimatedValue}" id="estimated_value" name="estimated_value"
+           type="number" required>
+    <label class="form-label" for="department">Requester department</label>
+    <select class="form-control" th:field="${purchase.department}" id="department" required>
+      <option th:each="department : ${allDepartments}" th:value="${department.id}" th:text="${department.name}"></option>
+    </select>
+    <label class="form-label" for="status">Status</label>
+    <select class="form-control" th:field="${purchase.status}" id="status" required>
+      <option value="Approved">Approved</option>
+      <option value="Under approval">Under approval</option>
+      <option value="Denied">Denied</option>
+      <option value="Closed">Closed</option>
+    </select>
+    <label class="form-label" for="purchase_type">Purchase Type</label>
+    <select class="form-control" th:field="${purchase.purchaseType}" id="purchase_type" required>
+      <option value="Public">Public</option>
+      <option value="Invitational">Invitational</option>
+    </select>
+    <label class="form-label" for="rfq_sent">RFQ sent</label>
+    <input class="form-control" type="date" th:field="${purchase.rfqSent}" id="rfq_sent">
+    <label class="form-label" for="rfq_deadline">RFQ sent</label>
+    <input class="form-control" th:field="${purchase.rfqDeadline}" id="rfq_deadline" type="date">
+    <label class="form-label" for="decision_date">Decision date</label>
+    <input class="form-control" th:field="${purchase.decisionDate}" id="decision_date" type="date">
+    <label class="form-label" for="contract_signature_date">Contract signature date</label>
+    <input class="form-control" th:field="${purchase.contractSignatureDate}" id="contract_signature_date" type="date" >
+    <input class="btn btn-secondary btn-lg btn-block" value="Save purchase" type="submit">
+  </form>
+</div>
+</body>
+</html>

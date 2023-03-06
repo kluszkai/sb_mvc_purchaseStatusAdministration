@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace = "~{fragments :: head}">
+    <title>Purchase Status Administration</title>
+</head>
+<body>
+<div th:replace = "~{fragments :: navigation-top}"></div>
+<div class="container">
+    <h3>General overview</h3>
+    <br>
+    <div class="row">
+
+        <div class="col">
+            <h5>Number of purchases by department</h5>
+            <table class="table table-striped w-auto small">
+                <tr>
+                    <th>Requester department</th>
+                    <th>Number of purchases</th>
+                </tr>
+                <tr th:each="entry : ${mapOfPurchasesByDepartment}">
+                    <td th:text="${entry.key}"></td>
+                    <td th:text="${entry.value}"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col">
+            <h5>Number of purchases by status</h5>
+            <table class="table table-striped w-auto small">
+                <tr>
+                    <th>Status of purchase</th>
+                    <th>Number of purchases</th>
+                </tr>
+                <tr th:each="entry : ${mapOfPurchasesByStatus}">
+                    <td th:text="${entry.key}"></td>
+                    <td th:text="${entry.value}"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col">
+            <h5>Number of purchases by purchaser</h5>
+            <table class="table table-striped w-auto small">
+                <tr>
+                    <th>Purchaser</th>
+                    <th>Number of purchases</th>
+                </tr>
+                <tr th:each="entry : ${mapOfPurchasesByPurchaser}">
+                    <td th:text="${entry.key}"></td>
+                    <td th:text="${entry.value}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="container" style="color: #fff; background-color: #1f1f1f;">
+    FOOTER
+</div>
+</body>
+</html>

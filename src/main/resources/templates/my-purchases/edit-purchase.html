@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace = "~{fragments :: head}">
+  <title>Edit purchase</title>
+</head>
+<body>
+<div th:replace = "~{fragments :: navigation-top}">
+</div>
+<div class="container">
+  <h2>Edit purchase</h2>
+  <br>
+  <h5>Please choose which purchase you would like to edit:</h5>
+
+  <div th:if="${purchaseEditResult != null}" class="alert alert-primary" role="alert">
+    <p th:text=${purchaseEditResult}></p>
+  </div>
+
+  <form class7="row g-3" method="post" action="/my-purchases/edit-purchase">
+    <div class="form-row">
+      <div class="col-6 col-sm-3">
+        <select class="form-select form-select-lg" name="purchase-bmig" id="purchase-bmig">
+          <option th:each="purchase : ${allMyPurchases}" th:value="${purchase.bmig}" th:text="${purchase.title}"></option>
+        </select>
+      </div>
+      <div class="col-6 col-sm-3">
+        <input type="submit" class="form-control" value="Edit">
+      </div>
+    </div>
+  </form>
+</div>
+<div class="col-6 mx-auto" th:if="${chosenPurchaseToEdit != null}">
+  <form method="post" action="/my-purchases/save-edited-purchase" th:object="${chosenPurchaseToEdit}">
+    <input class="form-control" th:field="${chosenPurchaseToEdit.id}" id="id" name="id" type="hidden" required>
+    <label class="form-label" for="bmig">BMIG</label>
+    <input class="form-control" th:field="${chosenPurchaseToEdit.bmig}" id="bmig" name="bmig" type="number" required>
+    <label class="form-label" for="title">Title</label>
+    <input class="form-control" th:field="${chosenPurchaseToEdit.title}" id="title" name="title" type="text" required>
+    <label class="form-label" for="estimated_value">Estimated value</label>
+    <input class="form-control" th:field="${chosenPurchaseToEdit.estimatedValue}" id="estimated_value" name="estimated_value"
+           type="number" required>
+    <label class="form-label" for="department">Requester department</label>
+    <select class="form-control" th:field="${chosenPurchaseToEdit.department}" id="department" required>
+      <option th:each="department : ${allDepartments}" th:value="${department.id}" th:text="${department.name}"></option>
+
+    </select>
+    <label class="form-label" for="status">Status</label>
+    <select class="form-control" th:field="${chosenPurchaseToEdit.status}" id="status" required>
+      <option value="Approved">Approved</option>
+      <option value="Under approval">Under approval</option>
+      <option value="Denied">Denied</option>
+      <option value="Closed">Closed</option>
+    </select>
+    <label class="form-label" for="purchase_type">Purchase Type</label>
+    <select class="form-control" th:field="${chosenPurchaseToEdit.purchaseType}" id="purchase_type" required>
+      <option value="Public">Public</option>
+      <option value="Invitational">Invitational</option>
+    </select>
+    <label class="form-label" for="rfq_sent">RFQ sent</label>
+    <input class="form-control" type="date" th:field="${chosenPurchaseToEdit.rfqSent}" id="rfq_sent">
+    <label class="form-label" for="rfq_deadline">RFQ deadline</label>
+    <input class="form-control" th:field="${chosenPurchaseToEdit.rfqDeadline}" id="rfq_deadline" type="date">
+    <label class="form-label" for="decision_date">Decision date</label>
+    <input class="form-control" th:field="${chosenPurchaseToEdit.decisionDate}" id="decision_date" type="date">
+    <label class="form-label" for="contract_signature_date">Contract signature date</label>
+    <input class="form-control" th:field="${chosenPurchaseToEdit.contractSignatureDate}" id="contract_signature_date" type="date">
+    <input type="submit" class="btn btn-secondary btn-lg btn-block" value="Save purchase">
+  </form>
+</div>
+</body>
+</html>

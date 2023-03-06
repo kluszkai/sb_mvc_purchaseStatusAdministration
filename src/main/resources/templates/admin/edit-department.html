@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace = "~{fragments :: head}">
+  <title>Add department</title>
+</head>
+<body>
+<div th:replace = "~{fragments :: navigation-top}"></div>
+<div class="col-6 mx-auto">
+  <h3>Edit department</h3>
+  <div th:if="${departmentSaveResult != null}">
+    <p th:text="${departmentSaveResult}"></p>
+  </div>
+  <form class7="row g-3" method="post" action="/admin/edit-department">
+    <div class="form-row">
+      <div class="col-6 col-sm-3">
+        <select class="form-select form-select-lg" name="department-id" id="department-id">
+          <option th:each="department : ${allDepartments}" th:value="${department.id}" th:text="${department.name}"></option>
+        </select>
+      </div>
+      <div class="col-6 col-sm-3">
+        <input type="submit" class="form-control" value="Edit">
+      </div>
+    </div>
+  </form>
+  <div th:if="${chosenDepartment != null}">
+  <form method="post"action="/admin/save-edited-department" th:object="${chosenDepartment}">
+    <input class="form-control" type="hidden" id="department_id" name="department_id" th:field="${chosenDepartment.id}">
+    <label class="form-label" for="department_name">Department name</label>
+    <input class="form-control" type="text" id="department_name" name="department_name" th:field="${chosenDepartment.name}" *required>
+    <label class="form-label" for="department_email">Department email</label>
+    <input class="form-control" type="text" id="department_email" name="department_email" th:field="${chosenDepartment.email}" *required>
+    <input class="btn btn-secondary btn-lg btn-block" type="submit" value="Save department">
+  </form>
+  </div>
+</div>
+</body>
+</html>

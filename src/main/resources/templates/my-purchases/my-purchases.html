@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments :: head}">
+    <title>My purchases</title>
+</head>
+<body>
+<div th:replace="~{fragments :: navigation-top}"></div>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h5>Number of purchases by department</h5>
+            <table class="table table-striped w-auto small">
+                <tr>
+                    <th>Requester department</th>
+                    <th>Number of purchases</th>
+                </tr>
+                <tr th:each="entry : ${mapOfPurchasesByDepartment}">
+                    <td th:text="${entry.key}"></td>
+                    <td th:text="${entry.value}"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col">
+            <h5>Number of purchases by status</h5>
+            <table class="table table-striped w-auto small">
+                <tr>
+                    <th>Status of purchase</th>
+                    <th>Number of purchases</th>
+                </tr>
+                <tr th:each="entry : ${mapOfPurchasesByStatus}">
+                    <td th:text="${entry.key}"></td>
+                    <td th:text="${entry.value}"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="col">
+            <h5>Number of purchases by type</h5>
+            <table class="table table-striped w-auto small">
+                <tr>
+                    <th>Purchase type</th>
+                    <th>Number of purchases</th>
+                </tr>
+                <tr th:each="entry : ${mapOfPurchasesByType}">
+                    <td th:text="${entry.key}"></td>
+                    <td th:text="${entry.value}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="container">
+        <h2>My purchases</h2>
+        <table class="table table-striped w-auto small">
+            <tr>
+                <th>Status</th>
+                <th>BMIG</th>
+                <th>Title</th>
+                <th>Estimated value</th>
+                <th>Purchaser</th>
+                <th>Requester department</th>
+                <th>Purchase type</th>
+                <th>RFQ sent</th>
+                <th>RFQ deadline</th>
+                <th>Date of decision</th>
+                <th>Date of contract signature</th>
+            </tr>
+            <tr th:each="purchase : ${loggedUsersPurchases}">
+                <td th:text="${purchase.status}"></td>
+                <td th:text="${purchase.bmig}"></td>
+                <td th:text="${purchase.title}"></td>
+                <td th:text="${#numbers.formatCurrency(purchase.estimatedValue)}"></td>
+                <td th:text="${purchase.purchaser?.name}"></td>
+                <td th:text="${purchase.department?.name}"></td>
+                <td th:text="${purchase.purchaseType}"></td>
+                <td th:text="${#dates.format(purchase.rfqSent, 'YYYY-MM-dd')}"></td>
+                <td th:text="${#dates.format(purchase.rfqDeadline, 'YYYY-MM-dd')}"></td>
+                <td th:text="${#dates.format(purchase.decisionDate, 'YYYY-MM-dd')}"></td>
+                <td th:text="${#dates.format(purchase.contractSignatureDate, 'YYYY-MM-dd')}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>

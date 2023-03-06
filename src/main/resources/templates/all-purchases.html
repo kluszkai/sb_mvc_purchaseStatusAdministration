@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace = "~{fragments :: head}">
+    <title>All purchases</title>
+</head>
+<body>
+<div th:replace = "~{fragments :: navigation-top}"></div>
+
+<div class="container">
+  <h2>All purchases</h2>
+  <table class="table table-striped w-auto small">
+    <tr>
+      <th>Status</th>
+      <th>BMIG</th>
+      <th>Title</th>
+      <th>Estimated value</th>
+      <th>Purchaser</th>
+      <th>Requester department</th>
+      <th>Purchase type</th>
+      <th>RFQ sent</th>
+      <th>RFQ deadline</th>
+      <th>Date of decision</th>
+      <th>Date of contract signature</th>
+    </tr>
+    <tr th:each = "purchase : ${purchases}">
+      <td th:text = "${purchase.status}"></td>
+      <td th:text = "${purchase.bmig}"></td>
+      <td th:text = "${purchase.title}"></td>
+      <td th:text = "${#numbers.formatCurrency(purchase.estimatedValue)}"></td>
+      <td th:text = "${purchase.purchaser?.name}"></td>
+      <td th:text = "${purchase.department?.name}"></td>
+      <td th:text = "${purchase.purchaseType}"></td>
+      <td th:text = "${#dates.format(purchase.rfqSent, 'YYYY-MM-dd')}"></td>
+      <td th:text = "${#dates.format(purchase.rfqDeadline, 'YYYY-MM-dd')}"></td>
+      <td th:text = "${#dates.format(purchase.decisionDate, 'YYYY-MM-dd')}"></td>
+      <td th:text = "${#dates.format(purchase.contractSignatureDate, 'YYYY-MM-dd')}"></td>
+    </tr>
+  </table>
+</div>
+</body>
+</html>
